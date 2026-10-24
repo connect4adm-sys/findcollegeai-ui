@@ -2356,6 +2356,75 @@ input:focus, select:focus, textarea:focus {
   }
 }
 
+
+/* ═══════════════════════════════════════════════════════════════
+   PREMIUM MOBILE NAVIGATION DRAWER & HIGH-CONTRAST BACKDROP
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  #navigation, .topnav {
+    display: none !important;
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    height: auto !important;
+    padding: 16px 20px 24px !important;
+    background: #020917 !important;
+    border-bottom: 1px solid rgba(0, 217, 245, 0.35) !important;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.95) !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    z-index: 500 !important;
+    box-sizing: border-box !important;
+  }
+  #navigation.open, .topnav.open {
+    display: flex !important;
+  }
+  #navigation a, .topnav a {
+    height: 48px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.16em !important;
+    color: #c5d6ee !important;
+    border-bottom: 1px solid rgba(113, 163, 220, 0.14) !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 4px !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+    transition: color 0.2s ease, background 0.2s ease !important;
+  }
+  #navigation a:hover, .topnav a:hover,
+  #navigation a.active, .topnav a.active {
+    color: #00d9f5 !important;
+  }
+  #navigation a.active:after, .topnav a.active:after {
+    display: none !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   UNIVERSAL VIEWPORT OVERFLOW-X PREVENTION & HERO CLIPPING
+   ═══════════════════════════════════════════════════════════════ */
+html, body {
+  overflow-x: clip !important;
+  max-width: 100vw !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+main {
+  overflow-x: clip !important;
+  max-width: 100vw !important;
+  box-sizing: border-box !important;
+}
+.hero {
+  overflow: hidden !important;
+}
+
 </style>
 </head>
 
@@ -2600,11 +2669,18 @@ input:focus, select:focus, textarea:focus {
             });
 
             document.addEventListener('click', (e) => {
-                if (userMenuWrapper && !userMenuWrapper.contains(e.target)) {
-                    userDropdown.classList.remove('show');
-                    userMenuBtn.setAttribute('aria-expanded', 'false');
-                }
-            });
+          if (nav && menuToggle && !nav.contains(e.target) && !menuToggle.contains(e.target)) {
+            if (nav.classList.contains('open')) {
+              nav.classList.remove('open');
+              menuToggle.setAttribute('aria-expanded', 'false');
+              menuToggle.textContent = '☰';
+            }
+          }
+          if (userMenuWrapper && !userMenuWrapper.contains(e.target)) {
+            userDropdown.classList.remove('show');
+            if (userMenuBtn) userMenuBtn.setAttribute('aria-expanded', 'false');
+          }
+        });
 
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
@@ -2682,83 +2758,6 @@ input:focus, select:focus, textarea:focus {
                 reader.readAsDataURL(file);
             });
         }
-    </script>
-
-
-    <script>
-        (function () {
-            const menuToggle = document.getElementById('menuToggle');
-            const nav = document.getElementById('navigation') || document.querySelector('.topnav');
-            const userDropdown = document.getElementById('userDropdown');
-            const userMenuBtn = document.getElementById('userMenuBtn') || document.getElementById('profile');
-            const userMenuWrapper = document.getElementById('userMenuWrapper');
-            const dropdownUserName = document.getElementById('dropdownUserName');
-            const dropdownAvatar = document.getElementById('dropdownAvatar');
-
-            if (menuToggle && nav) {
-                menuToggle.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const isOpen = nav.classList.toggle('open');
-                    menuToggle.setAttribute('aria-expanded', String(isOpen));
-                    menuToggle.textContent = isOpen ? '×' : '☰';
-                    if (isOpen && userDropdown) userDropdown.classList.remove('show');
-                });
-            }
-
-            function syncSuiteUserIdentity() {
-                try {
-                    const savedName = localStorage.getItem('studentProfileName');
-                    if (savedName && savedName.trim()) {
-                        const trimmed = savedName.trim();
-                        if (dropdownUserName) dropdownUserName.textContent = trimmed;
-                        const initial = trimmed.charAt(0).toUpperCase();
-                        if (userMenuBtn) userMenuBtn.textContent = initial;
-                        if (dropdownAvatar) dropdownAvatar.textContent = initial;
-                    }
-                } catch (e) { }
-            }
-            syncSuiteUserIdentity();
-
-            if (userMenuBtn && userDropdown) {
-                userMenuBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const isShown = userDropdown.classList.toggle('show');
-                    userMenuBtn.setAttribute('aria-expanded', String(isShown));
-                    if (isShown && nav) nav.classList.remove('open');
-                });
-
-                document.addEventListener('click', (e) => {
-                    if (userMenuWrapper && !userMenuWrapper.contains(e.target)) {
-                        userDropdown.classList.remove('show');
-                        userMenuBtn.setAttribute('aria-expanded', 'false');
-                    }
-                });
-
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape') {
-                        userDropdown.classList.remove('show');
-                        userMenuBtn.setAttribute('aria-expanded', 'false');
-                        if (nav) nav.classList.remove('open');
-                    }
-                });
-            }
-
-            const logoutBtn = document.getElementById('dropdownLogoutBtn');
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', () => {
-                    const toastFunc = window.toast || window.notify || (typeof showToast === 'function' ? showToast : null) || (typeof showStatus === 'function' ? showStatus : null);
-                    if (toastFunc) {
-                        toastFunc('Signed out of student session. Redirecting to home...');
-                    } else {
-                        alert('Signed out of student session. Redirecting to home...');
-                    }
-                    if (userDropdown) userDropdown.classList.remove('show');
-                    setTimeout(() => {
-                        window.location.href = 'index.html';
-                    }, 1200);
-                });
-            }
-        })();
     </script>
 </body>
 
