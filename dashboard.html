@@ -2458,13 +2458,13 @@ input:focus, select:focus, textarea:focus {
       </div>
       <div class="user-menu-wrapper" id="userMenuWrapper">
         <button class="avatarbtn user-avatar-btn" id="userMenuBtn" aria-expanded="false" aria-label="Account menu"
-          title="Account Menu">K</button>
+          title="Account Menu">T</button>
         <div class="user-dropdown" id="userDropdown" role="menu" aria-label="User Account Menu">
           <div class="user-dropdown-header">
-            <div class="user-dropdown-avatar" id="dropdownAvatar">K</div>
+            <div class="user-dropdown-avatar" id="dropdownAvatar">T</div>
             <div class="user-dropdown-info">
-              <strong class="user-dropdown-name" id="dropdownUserName">Kunal Pratap Singh</strong>
-              <span class="user-dropdown-email" id="dropdownUserEmail">kunalpsingh403@gmail.com</span>
+              <strong class="user-dropdown-name" id="dropdownUserName">Testing Name</strong>
+              <span class="user-dropdown-email" id="dropdownUserEmail">student@example.com</span>
             </div>
           </div>
           <div class="user-dropdown-list">
@@ -2525,7 +2525,7 @@ input:focus, select:focus, textarea:focus {
     <main class="content">
       <div class="head">
         <div>
-          <h1 id="title">Good day, <b>Kunal Pratap Singh</b> 👋</h1>
+          <h1 id="title">Good day, <b>Testing Name</b> 👋</h1>
           <p id="subtitle">Here’s your personalized academic overview and data-driven recommendations.</p>
         </div><button class="pill" id="edit">♙ &nbsp; Edit Profile (100%)</button>
       </div>
@@ -2936,9 +2936,9 @@ input:focus, select:focus, textarea:focus {
               </div>
             </div>
             <form id="counsellorForm" class="card pad" style="display:grid;gap:11px">
-              <div class="field"><label>Full name</label><input value="Kunal Pratap Singh" required></div>
-              <div class="field"><label>Phone number</label><input value="8193948870" required></div>
-              <div class="field"><label>Email</label><input type="email" value="kunalpsingh403@gmail.com" required>
+              <div class="field"><label>Full name</label><input value="Testing Name" required></div>
+              <div class="field"><label>Phone number</label><input value="9876543210" required></div>
+              <div class="field"><label>Email</label><input type="email" value="student@example.com" required>
               </div>
               <div class="formgrid">
                 <div class="field"><label>Current class</label><select>
@@ -3023,7 +3023,7 @@ input:focus, select:focus, textarea:focus {
   <script>
 
     const pageMeta = {
-      command: ["Good day, Kunal Pratap Singh 👋", "Here’s your personalized academic overview and data-driven recommendations."],
+      command: ["Good day, Testing Name 👋", "Here’s your personalized academic overview and data-driven recommendations."],
       roadmap: ["My 5-Year Roadmap", "A structured view of milestones, skills, internships and career launch."],
       finder: ["AI College & Degree Finder", "Explore institutions using your course, location and budget preferences."],
       streamfit: ["StreamFit™ Assessment", "Explore stream choices based on aptitude, interests and personality."],
@@ -3062,7 +3062,7 @@ input:focus, select:focus, textarea:focus {
       const title = document.getElementById("title");
       const subtitle = document.getElementById("subtitle");
       if (title) {
-        if (viewName === "command") title.innerHTML = "Good day, <b>Kunal Pratap Singh</b> 👋";
+        if (viewName === "command") title.innerHTML = "Good day, <b>Testing Name</b> 👋";
         else title.textContent = pageMeta[viewName][0];
       }
       if (subtitle) subtitle.textContent = pageMeta[viewName][1];
@@ -3302,7 +3302,7 @@ input:focus, select:focus, textarea:focus {
           if (userMenuBtn) userMenuBtn.textContent = initial;
           if (dropdownAvatar) dropdownAvatar.textContent = initial;
           const title = document.getElementById('title');
-          if (title && title.innerHTML.includes('Kunal Pratap Singh')) {
+          if (title && title.innerHTML.includes('Testing Name')) {
             title.innerHTML = `Good day, <b>${trimmed.split(' ')[0]}</b> 👋`;
           }
         }
